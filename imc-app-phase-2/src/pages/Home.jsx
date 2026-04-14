@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback } from 'react';
 import Form from '../components/form';
 import { useIMCCalculator } from '../hooks/useIMCCalculator';
 import Button from '../components/button.jsx'
@@ -19,17 +19,16 @@ const Home = () => {
         calculateIMC
     } = useIMCCalculator();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = useCallback((e) => {
         e.preventDefault();
-        // Gérer le résultat de calculateIMC
         calculateIMC();
-    };
-    const handleReset = () => {
-          resetForm();
-    }
+    }, [calculateIMC]);
 
-    // Mémorisation du résultat pour éviter les appels multiples
-    const resultatMemo = useMemo(() => resultat, [resultat]);
+    const handleReset = useCallback(() => {
+        resetForm();
+    }, [resetForm]);
+
+    // ...existing code...
 
     return (
         <div className="divi-imc-wrapper">
@@ -50,14 +49,14 @@ const Home = () => {
                 </div>
             </div>
 
-            {resultatMemo && (
-                <div className={`imc-result ${resultatMemo.classe}`}>
-                    <p id="result" className="imc-value">{resultatMemo.valeur}</p>
-                    <p id="explanation" className="imc-text">{resultatMemo.texte}</p>
+            {resultat && (
+                <div className={`imc-result ${resultat.classe}`}>
+                    <p id="result" className="imc-value">{resultat.valeur}</p>
+                    <p id="explanation" className="imc-text">{resultat.texte}</p>
                     <Button
                         onClick={handleReset}
-                        className={'btn-reset'}
-                        >
+                        className="btn-reset"
+                    >
                         Réinitialiser
                     </Button>
                 </div>

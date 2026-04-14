@@ -1,33 +1,16 @@
 import { useState, useCallback } from 'react';
 import { calculerIMC } from '../script/calc/imc.js';
 
-
+/**
+ * Hook personnalisé pour gérer la logique de calcul de l'IMC
+ * @returns {Object} { poids, taille, resultat, isLoading, errors, setPoidsValue, setTailleValue, calculateIMC, resetForm }
+ */
 export const useIMCCalculator = () => {
     const [poids, setPoids] = useState("");
     const [taille, setTaille] = useState("");
     const [resultat, setResultat] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [errors, setErrors] = useState({});
-    // ✅ SETTERS
-    const setPoidsValue = useCallback((value) => {
-        setPoids(value);
-    }, []);
-
-    const setTailleValue = useCallback((value) => {
-        setTaille(value);
-    }, []);
-
-    const setResultatValue = useCallback((value) => {
-        setResultat(value);
-    }, []);
-
-    const setErrorsValue = useCallback((value) => {
-        setErrors(value);
-    }, []);
-
-    const setLoadingValue = useCallback((value) => {
-        setIsLoading(value);
-    }, []);
 
     // ✅ VALIDATION
     const validateInputs = useCallback(() => {
@@ -43,26 +26,26 @@ export const useIMCCalculator = () => {
         return newErrors;
     }, [poids, taille]);
 
-    // ✅ CALCUL IMC -
+    // ✅ CALCUL IMC
     const calculateIMC = useCallback(() => {
         const validationErrors = validateInputs();
-        setErrorsValue(validationErrors);
+        setErrors(validationErrors);
 
         if (Object.keys(validationErrors).length > 0) {
             return false;
         }
 
-        setLoadingValue(true);
+        setIsLoading(true);
 
         try {
             const result = calculerIMC(poids, taille);
             if (result) {
-                setResultatValue(result);
-                setErrorsValue({});
+                setResultat(result);
+                setErrors({});
                 return true;
             } else {
-                setResultatValue(null);
-                setErrorsValue({
+                setResultat(null);
+                setErrors({
                     taille: "Les valeurs ne sont pas valides",
                     poids: "Veuillez réessayer"
                 });
@@ -70,14 +53,14 @@ export const useIMCCalculator = () => {
             }
         } catch (error) {
             console.error("Erreur lors du calcul:", error);
-            setErrorsValue({
+            setErrors({
                 global: "Une erreur est survenue lors du calcul"
             });
             return false;
         } finally {
-            setLoadingValue(false);
+            setIsLoading(false);
         }
-    }, [poids, taille, validateInputs, setErrorsValue, setResultatValue, setLoadingValue]);
+    }, [poids, taille, validateInputs]);
 
     // ✅ RESET
     const resetForm = useCallback(() => {
@@ -89,22 +72,18 @@ export const useIMCCalculator = () => {
     }, []);
 
     return {
-        // Setters
-        setPoidsValue,
-        setTailleValue,
-        setResultatValue,
-        setErrorsValue,
-        setLoadingValue,
-        // Methods
-        calculateIMC,
-        resetForm,
-        validateInputs,
-        // State (pour accès direct si nécessaire)
+        // State
         poids,
         taille,
         resultat,
         isLoading,
-        errors
+        errors,
+        // Setters
+        setPoidsValue: setPoids,
+        setTailleValue: setTaille,
+        // Methods
+        calculateIMC,
+        resetForm
     };
 };
 

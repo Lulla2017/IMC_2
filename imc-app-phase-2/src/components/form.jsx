@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Input from './input';
 import Button from './button';
 
@@ -52,6 +53,16 @@ const Form = ({
             </Button>
         </form>
     );
+};
+
+Form.propTypes = {
+    poids: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    taille: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    onPoidsChange: PropTypes.func.isRequired,
+    onTailleChange: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool,
+    errors: PropTypes.objectOf(PropTypes.string)
 };
 
 export default Form;

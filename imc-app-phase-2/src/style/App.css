@@ -1,32 +1,115 @@
 /* Import de la police Lato pour un rendu propre */
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
 
-.authors{
+/* Structure globale pour footer collé en bas */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #1a1a1a;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+  width: 100vw;
+  max-width: 100%;
+}
+
+/* Header centré */
+.header {
+  background-color: #1a3b7a;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.header-title {
+  margin: 0;
+  padding: 0;
+}
+
+.header-title h1 {
+  color: white;
+  margin: 0;
+  padding: 10px 0;
+  font-family: "Lato", sans-serif;
+}
+
+.header-title .quote {
+  color: #ddd;
+  margin: 5px 0 0 0;
+  font-family: "Lato", sans-serif;
+}
+
+/* Main container - prend tout l'espace disponible */
+.mainContainer {
+  flex: 1;
+  background-color: #1a1a1a;
+  display: flex;
+  justify-content: center;
+}
+
+/* Footer collé en bas */
+.footer {
+  background-color: #1a3b7a;
+  padding: 20px;
+  text-align: center;
+  color: white;
+  width: 100%;
+  margin-top: auto;
+  overflow-x: hidden;
+}
+
+.footer p {
+  margin: 0;
+  color: #ddd;
+  font-family: "Lato", sans-serif;
+}
+
+.authors {
   display: flex;
   justify-content: center;
   gap: 50px;
+  color: #ffffff;
+  padding: 10px;
+  margin-top: 20px;
 }
 
 .divi-imc-wrapper {
   font-family: "Lato", sans-serif;
-  max-width: 500px; /* Légèrement plus compact pour ressembler à l'image */
+  max-width: 500px;
   margin: 50px auto;
   padding: 15px;
   box-sizing: border-box;
+  background-color: #1a1a1a;
 }
 
 /* La Carte Principale */
 .imc-container {
   background-color: #fff;
-  border-radius: 8px; /* Coins arrondis doux */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* Ombre légère et moderne */
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   width: 100%;
-  overflow: hidden; /* Pour que l'entête suive les arrondis */
+  overflow: hidden;
 }
 
 /* L'Entête Bleu Foncé */
 .imc-header {
-  background-color: #1a3b7a; /* Le bleu de l'image */
+  background-color: #1a3b7a;
   padding: 20px 0;
 }
 
@@ -36,7 +119,7 @@
   margin: 0;
   font-size: 24px;
   color: white;
-  text-transform: none; /* Pas de majuscules automatiques */
+  text-transform: none;
 }
 
 /* Le Corps de la Carte */
@@ -50,16 +133,22 @@
 /* Les Inputs côte à côte */
 .imc-input-flex {
   display: flex;
-  gap: 15px;
+  gap: 2rem;
   width: 100%;
   margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.imc-input-flex > * {
+  flex: 1;
+  min-width: 200px;
 }
 
 .imc-container input {
   width: 100%;
   padding: 15px 10px;
   border: 1px solid #e0e0e0;
-  background-color: #f8f9fa; /* Gris très clair pour le fond */
+  background-color: #f8f9fa;
   border-radius: 6px;
   font-size: 16px;
   box-sizing: border-box;
@@ -68,14 +157,14 @@
 
 .imc-container input:focus {
   outline: none;
-  border-color: #29C4A9; /* Couleur d'accentuation au focus */
+  border-color: #29C4A9;
   box-shadow: 0 0 0 2px rgba(41, 196, 169, 0.1);
 }
 
 /* Le Bouton Calculer */
 .imc-container button {
-  width: 100%; /* Pleine largeur sur mobile, ajustable */
-  max-width: 250px; /* Pour ne pas être trop large sur PC */
+  width: 100%;
+  max-width: 250px;
   padding: 15px;
   background-color: #1a3b7a;
   color: white;
@@ -88,11 +177,11 @@
 }
 
 .imc-container button:hover {
-  background-color: #29C4A9; /* Vert d'eau au survol */
+  background-color: #29C4A9;
 }
 
 .imc-container button:active {
-  transform: scale(0.98); /* Effet de clic */
+  transform: scale(0.98);
 }
 
 /* --- La Bulle de Résultat Dynamique --- */
@@ -103,10 +192,11 @@
   padding: 35px;
   transition: all 0.4s ease-out;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  animation: slideIn 0.3s ease;
 }
 
 #result {
-  font-size: 48px; /* Très gros score */
+  font-size: 48px;
   font-weight: 700;
   margin: 0 0 10px 0;
   line-height: 1;
@@ -119,43 +209,6 @@
   line-height: 1.4;
 }
 
-/* --- Couleurs des Catégories (Fond clair, Texte foncé) --- */
-
-/* Bleu clair */
-.imc-result-maigreur { 
-  color: #2c85a1; 
-  background-color: #e3f7fd; 
-}
-
-/* Vert d'eau */
-.imc-result-normal { 
-  color: #1f9d86; 
-  background-color: #e6fcf5; 
-}
-
-/* Orange */
-.imc-result-surpoids { 
-  color: #d17e00; 
-  background-color: #fff8e6; 
-}
-
-/* Orange foncé */
-.imc-result-modere { 
-  color: #d15600; 
-  background-color: #fff2e6; 
-}
-
-/* Rouge */
-.imc-result-severe { 
-  color: #b82e0c; 
-  background-color: #fbeae6; 
-}
-
-/* Rouge foncé */
-.imc-result-morbide { 
-  color: #a10000; 
-  background-color: #fbe6e6; 
-}
 /* Input IMC */
 .imc-input-group {
   display: flex;
@@ -244,17 +297,6 @@
   align-items: center;
 }
 
-.imc-input-flex {
-  display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
-}
-
-.imc-input-flex > * {
-  flex: 1;
-  min-width: 200px;
-}
-
 /* Bouton */
 .btn-calculate, .btn-reset {
   padding: 0.75rem 1.5rem;
@@ -286,14 +328,6 @@
 }
 
 /* Résultat */
-.imc-result {
-  margin-top: 2rem;
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  text-align: center;
-  animation: slideIn 0.3s ease;
-}
-
 @keyframes slideIn {
   from {
     opacity: 0;
@@ -370,10 +404,29 @@
 
 /* Mobile Responsiveness */
 @media (max-width: 480px) {
-  .divi-imc-wrapper { margin: 20px auto; padding: 10px; }
-  .imc-input-flex { flex-direction: column; gap: 10px; }
-  .imc-header h2 { font-size: 20px; }
-  .imc-container button { max-width: 100%; }
-  #result { font-size: 40px; }
-  .imc-result { padding: 25px; }
+  .divi-imc-wrapper {
+    margin: 20px auto;
+    padding: 10px;
+  }
+
+  .imc-input-flex {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .imc-header h2 {
+    font-size: 20px;
+  }
+
+  .imc-container button {
+    max-width: 100%;
+  }
+
+  #result {
+    font-size: 40px;
+  }
+
+  .imc-result {
+    padding: 25px;
+  }
 }
